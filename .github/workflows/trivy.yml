@@ -11,6 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Print Pull Request Body
+        run: echo "${{ github.event.pull_request.body }}"
+
       - name: Check if PR is opened with specific comment and against specific branch
         id: pr_check
         if: github.event.pull_request.base.ref == 'develop' && contains(github.event.pull_request.body, 'Run Tests')
