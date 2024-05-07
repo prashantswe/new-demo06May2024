@@ -8,8 +8,6 @@ on:
     types: [opened]
 
 jobs:
- # build:
- #   runs-on: ubuntu-latest
   pr_check:
     runs-on: ubuntu-latest
     outputs:
@@ -29,6 +27,7 @@ jobs:
     steps:
       - name: Check success of previous job
         run: |
+          echo "${{ needs.pr_check.outputs.job_success }}"
           outcome=$(echo "${{ needs.pr_check.outputs.job_success }}")
           if [[ "$outcome" != "true" ]]; then
             echo "Condition not met, breaking workflow"
