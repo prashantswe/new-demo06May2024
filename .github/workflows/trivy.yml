@@ -16,7 +16,9 @@ jobs:
 
       - name: Check if PR is opened with specific comment and against specific branch
         id: pr_check
-        if: github.event.pull_request.base.ref == 'develop' && contains(github.event.pull_request.body, 'Run Tests')
+        #if: github.event.pull_request.base.ref == 'develop' && contains(github.event.pull_request.body, 'Run Tests')
+        if: github.event.pull_request.base.ref == 'develop' && contains(github.event.pull_request.title, 'Run Tests')
+
         run: exit 0
 
       - name: Checkout code
