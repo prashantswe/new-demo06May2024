@@ -16,7 +16,12 @@ jobs:
       - name: Check PR details
         if: github.event.pull_request.base.ref == 'develop' && contains(github.event.comment.body, 'Run Tests')
         run: exit 0
-
+  print_success:
+    runs-on: ubuntu-latest
+    needs: [pr_check]
+    steps:
+       - name: Print success of previous job
+         run: echo "Previous job outcome:${{ needs.pr_check.outcome }}"      
   break_workflow:
     runs-on: ubuntu-latest
     needs: [pr_check]
