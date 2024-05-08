@@ -1,8 +1,8 @@
 name: trivy_with_comment_and_branch
 
 on:
-  push:
-    branches: [ "main", "develop", "sprint-*" ]
+  #push:
+  #  branches: [ "main", "develop", "sprint-*" ]
   pull_request:
     branches: [ "main", "develop", "sprint-*" ]
     types: [opened]
