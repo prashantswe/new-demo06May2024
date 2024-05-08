@@ -16,7 +16,7 @@ jobs:
       - name: Fetch PR details
         id: fetch_pr
         run: |
-         echo "::set-output name=body::$(curl -s -H 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' ${{ github.event.pull_request.comments_url }})"
+         echo "::set-output name=body::$(curl -s -H 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' ${{ github.event.comment.body }})"
          if: github.event.pull_request.base.ref == 'develop'
       - name: Check PR details
         id: check_success
