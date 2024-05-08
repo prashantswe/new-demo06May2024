@@ -30,15 +30,15 @@ jobs:
           echo "${{ needs.pr_check.outputs.job_success }}"
           outcome=$(echo "${{ needs.pr_check.outputs.job_success }}")
           if [[ "$outcome" != "true" ]]; then
-            echo "Condition not met, breaking workflow"
-            exit 1
+            echo "Condition not met, proceeding with next job"
+            exit 0
           fi
 
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Run Trivy vulnerability scanner in repo mode
-        if: steps.pr_check.outcome == 'success'
+        if: steps.pr_check.outputs.job_success == 'true'
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
@@ -48,8 +48,7 @@ jobs:
           severity: 'CRITICAL'
 
       - name: Upload Trivy scan results to GitHub Security tab
-        if: steps.pr_check.outcome == 'success'
+        if: steps.pr_check.outputs.job_success == 'true'
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
-
