@@ -6,10 +6,14 @@ name: trivy_with_comment_and_branch
 #  pull_request:
 #    branches: [ "main", "develop", "sprint-*" ]
 #    types: [opened]
+#on:
+#  pull_request:
+#    types: [opened]
 on:
   pull_request:
-    types: [opened]
-    
+    branches:
+      - main
+      - develop
 jobs:
   pr_check:
     runs-on: ubuntu-latest
