@@ -9,11 +9,14 @@ name: trivy_with_comment_and_branch
 #on:
 #  pull_request:
 #    types: [opened]
+#on:
+#  pull_request:
+#    branches:
+#      - main
+#      - develop
 on:
-  pull_request:
-    branches:
-      - main
-      - develop
+ pull_request_review_comment:
+    types: [created, edited]
 jobs:
   pr_check:
     runs-on: ubuntu-latest
@@ -21,8 +24,9 @@ jobs:
       job_success: ${{ steps.check_success.outputs.success }}
     steps:
       - name: Print PR Title
-      #  run: echo "Pull Request Title: ${{ github.event.pull_request.title }}"
-        run: echo "Pull Request Title: ${{ github.event.pull_request.title }}"
+        run: echo "Pull Request Title:${{ github.event.pull_request.title }}"
+      - name: Print PR  Body
+        run: echo "Pull Request Title:${{ github.event.pull_request.body }}"  
       - name: Check PR details
         id: check_success
         if: github.event.pull_request.base.ref == 'develop' && contains(github.event.pull_request.title, 'Run Tests')
