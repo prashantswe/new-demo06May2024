@@ -28,13 +28,13 @@ jobs:
       - name: Print PR  Body 1
         run: echo "Pull Request Title:${{ github.event.pull_request.body }}"  
       - name: Print PR  Body 2
-        run: echo "Pull Request Title:${{github.event.comment.body, 'Run Tests}}"
+        run: echo "Pull Request Title:${{ github.event.comment.body, 'Run Tests }}"
       - name: Check PR details
         id: check_success
-        if: github.event.pull_request.base.ref == 'develop' && contains(github.event.pull_request.title, 'Run Tests')
+        if: github.event.pull_request.base.ref == 'develop' && contains(github.event.comment.body, 'Run Tests')
         run: echo "::set-output name=success::true"
       - name: Set success to false if condition not met
-        if: github.event.pull_request.base.ref != 'develop' || !contains(github.event.pull_request.title, 'Run Tests')
+        if: github.event.pull_request.base.ref != 'develop' || !contains(github.event.comment.body, 'Run Tests')
         run: echo "::set-output name=success::false"
 
   break_workflow:
